@@ -27,7 +27,7 @@ class NewTweet extends Component {
     const { tweet } = this.state;
     if (this.isTweetValid()) {
       try {
-        const tweetData = { content: tweet, userName: 'yonatan', date: new Date().toISOString() };
+        const tweetData = { content: tweet, userName: localStorage.getItem('userName'), date: new Date().toISOString() };
         await Api.insertTweet(tweetData);
         onPostNewTweet(tweetData);
         this.setState({ tweet: '' });
