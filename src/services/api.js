@@ -1,7 +1,12 @@
 import axios from 'axios';
 
-const apiUrl = (path) => ``
+const apiUrl = (path) => `https://itc-19.appspot.com${path}`
+// const apiUrl = (path) => `http://localhost:8080${path}`
 
-const fetchTweets = () => {
-  return axios.get('')
+export const fetchTweets = () => {
+  return axios.get(apiUrl('/tweet'));
+}
+
+export const insertTweet = tweet => {
+  return axios.post(apiUrl('/tweet'), { tweet });
 }

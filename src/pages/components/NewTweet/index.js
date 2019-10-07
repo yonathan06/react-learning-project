@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from "prop-types";
+import * as Api from '../../../services/api';
 import './styles.css';
 
 class NewTweet extends Component {
@@ -7,6 +8,7 @@ class NewTweet extends Component {
     super(props);
     this.state = {
       tweet: '',
+      loading: false,
     }
   }
 
@@ -20,12 +22,21 @@ class NewTweet extends Component {
     return this.state.tweet.length <= 140;
   }
 
-  postNewTweet() {
+  async postNewTweet() {
     const { onPostNewTweet } = this.props;
     const { tweet } = this.state;
     if (this.isTweetValid()) {
-      onPostNewTweet({ content: tweet, userName: 'yonatan', date: new Date().toISOString() });
-      this.setState({ tweet: '' });
+      try {
+        const tweetData = { content: tweet, userName: 'yonatan', date: new Date().toISOString() };
+        await Api.insertTweet(tweetData);
+        onPostNewTweet(tweetData);
+        this.setState({ tweet: '' });
+      } catch (e) {
+        alert(`Server error: ${e.message}`)
+      } finally {
+        this.setState({ loading: false });
+      }
+
     }
   }
 
