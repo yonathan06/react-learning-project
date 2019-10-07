@@ -11,7 +11,7 @@ function App() {
       <Router>
         <div className="container">
           <nav className="navbar navbar-expand-lg  navbar-dark bg-dark">
-            <a className="navbar-brand" href="#">Fake Tweeter</a>
+            <a className="navbar-brand" href="#">Itc bootcamp SM</a>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
               <span className="navbar-toggler-icon"></span>
             </button>
