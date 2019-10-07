@@ -1,0 +1,9 @@
+.tweet {
+  font-size: 16px;
+}
+
+.tweet-details {
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+}

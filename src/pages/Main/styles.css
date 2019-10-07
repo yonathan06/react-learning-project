@@ -1,0 +1,12 @@
+.main-page {
+  max-width: 600px;
+  padding: 5px 0;
+}
+
+.tweets-holder {
+  margin-top: 20px;
+}
+
+.tweet {
+  margin-bottom: 15px;
+}
