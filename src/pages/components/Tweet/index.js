@@ -1,19 +1,24 @@
 import React from "react";
 import PropTypes from 'prop-types';
+import { AppContext } from "../../../context";
 import './styles.css'
 
 const Tweet = (props) => {
-  const { content, userName, date } = props;
+  const { content, date } = props;
   return (
-    <div className="tweet card text-white bg-dark">
-      <div className="card-body">
-        <div className="tweet-details card-subtitle mb-2 text-muted">
-          <div className="tweet-user">{userName}</div>
-          <div className="tweet-date">{date}</div>
+    <AppContext.Consumer>
+      {({ userName }) => (
+        <div className="tweet card text-white bg-dark">
+          <div className="card-body">
+            <div className="tweet-details card-subtitle mb-2 text-muted">
+              <div className="tweet-user">{props.userName === userName ? 'me' : props.userName}</div>
+              <div className="tweet-date">{date}</div>
+            </div>
+            <p className="card-text">{content}</p>
+          </div>
         </div>
-        <p className="card-text">{content}</p>
-      </div>
-    </div>
+      )}        
+      </AppContext.Consumer>
   );
 }
 

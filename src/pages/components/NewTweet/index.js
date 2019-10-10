@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from "prop-types";
 import * as Api from '../../../services/api';
+import { AppContext } from '../../../context';
 import './styles.css';
 
 class NewTweet extends Component {
@@ -22,12 +23,12 @@ class NewTweet extends Component {
     return this.state.tweet.length <= 140;
   }
 
-  async postNewTweet() {
+  async postNewTweet(userName) {
     const { onPostNewTweet } = this.props;
     const { tweet } = this.state;
     if (this.isTweetValid()) {
       try {
-        const tweetData = { content: tweet, userName: localStorage.getItem('userName'), date: new Date().toISOString() };
+        const tweetData = { content: tweet, userName, date: new Date().toISOString() };
         await Api.insertTweet(tweetData);
         onPostNewTweet(tweetData);
         this.setState({ tweet: '' });
@@ -44,22 +45,26 @@ class NewTweet extends Component {
     const { tweet } = this.state;
     const isTweetValid = this.isTweetValid()
     return (
-      <div className="new-tweet-form">
-        <div className="new-tweet-form-input">
-          <textarea
-            value={tweet}
-            name="tweet"
-            placeholder="What you have in mind?"
-            onChange={event => this.handleInputChange(event)}
-          />
-        </div>
-        <div className="new-tweet-form-actions">
-          {!isTweetValid &&
-            <div className="new-tweet-length-error alert alert-danger">The tweet can't contain more then 140 chars.</div>
-          }
-          <button className="btn btn-primary" onClick={() => this.postNewTweet()} disabled={!isTweetValid}>Tweet</button>
-        </div>
-      </div>
+      <AppContext.Consumer>
+        {({ userName }) => (
+          <div className="new-tweet-form">
+            <div className="new-tweet-form-input">
+              <textarea
+                value={tweet}
+                name="tweet"
+                placeholder="What you have in mind?"
+                onChange={event => this.handleInputChange(event)}
+              />
+            </div>
+            <div className="new-tweet-form-actions">
+              {!isTweetValid &&
+                <div className="new-tweet-length-error alert alert-danger">The tweet can't contain more then 140 chars.</div>
+              }
+              <button className="btn btn-primary" onClick={() => this.postNewTweet(userName)} disabled={!isTweetValid}>Tweet</button>
+            </div>
+          </div>
+        )}
+      </AppContext.Consumer>
     );
   }
 }

@@ -14,16 +14,13 @@ class MainPage extends Component {
   }
 
   componentDidMount() {
-    // this.loadTweetsFromLocalStorage();
     this.loadTweetsFromServer();
   }
 
   addTweet(tweet) {
     const { tweets } = this.state;
     tweets.push(tweet);
-    this.setState({ tweets }
-      // , () => this.saveTweetsToLocalStorage()
-    );
+    this.setState({ tweets });
   }
 
   async loadTweetsFromServer() {
@@ -36,24 +33,6 @@ class MainPage extends Component {
       alert(`server error ${e.message}`);
     } finally {
       this.setState({ loading: false });
-    }
-  }
-
-  saveTweetsToLocalStorage() {
-    const { tweets } = this.state;
-    localStorage.setItem('tweets', JSON.stringify(tweets));
-  }
-
-  loadTweetsFromLocalStorage() {
-    let tweets;
-    try {
-      const localStorageTweets = localStorage.getItem('tweets');
-      if (typeof localStorageTweets === 'string' && localStorageTweets.length > 0) {
-        tweets = JSON.parse(localStorage.getItem('tweets'))
-      }
-    } catch (e) { }
-    if (tweets) {
-      this.setState({ tweets });
     }
   }
 
